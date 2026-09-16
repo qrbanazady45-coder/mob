@@ -1,38 +1,13 @@
-name: Android CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Create Gradle Wrapper
-        run: |
-          if [ ! -f "gradlew" ]; then
-            gradle wrapper --gradle-version 8.5
-          fi
-
-      - name: Grant execute permission
-        run: chmod +x gradlew
-
       - name: Build with Gradle
         run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      # این مرحله به ما می‌گوید فایل‌های APK کجا ساخته شده‌اند
+      - name: List APK files
+        run: find . -name "*.apk"
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
+          # این قسمت را فعلاً حذف کنید یا بگذارید باشد؛ با اجرای دستور بالا ما آدرس واقعی را پیدا می‌کنیم
           path: app/build/outputs/apk/debug/*.apk
