@@ -1,13 +1,31 @@
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+name: Android CI
 
-      # این مرحله به ما می‌گوید فایل‌های APK کجا ساخته شده‌اند
-      - name: List APK files
-        run: find . -name "*.apk"
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          name: app-debug
-          # این قسمت را فعلاً حذف کنید یا بگذارید باشد؛ با اجرای دستور بالا ما آدرس واقعی را پیدا می‌کنیم
-          path: app/build/outputs/apk/debug/*.apk
+          java-version: '17'
+          distribution: 'temurin'
+
+      # اینجا دستور نصب Gradle را اضافه کردیم تا سرور بتواند فایل‌های کمبود را بسازد
+      - name: Install Gradle and Generate Wrapper
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gradle
+          gradle wrapper --gradle-version 8.5
+
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
