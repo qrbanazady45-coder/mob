@@ -27,9 +27,12 @@ jobs:
         working-directory: ./app
         run: ../gradlew assembleDebug
 
-      # این بخش فایل APK را برای شما ذخیره می‌کند تا بتوانید دانلودش کنید
+      # مرحله جدید برای اطمینان از پیدا شدن فایل
+      - name: List files in debug folder
+        run: ls -R app/build/outputs/apk/debug/
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/debug/*.apk
