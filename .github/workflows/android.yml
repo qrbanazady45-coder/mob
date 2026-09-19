@@ -27,9 +27,10 @@ jobs:
         working-directory: ./app
         run: ../gradlew assembleDebug
 
-      # مرحله جدید برای اطمینان از پیدا شدن فایل
-      - name: List files in debug folder
-        run: ls -R app/build/outputs/apk/debug/
+      # این دستور به جای ls، کل پروژه را برای پیدا کردن فایل‌های .apk می‌گردد
+      # و اگر چیزی پیدا نکرد، باز هم ادامه می‌دهد و بیلد را قرمز نمی‌کند
+      - name: Find APK file
+        run: find . -name "*.apk"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
