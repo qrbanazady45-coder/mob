@@ -1,11 +1,9 @@
-name: Android CI
-
+name: List Files
 on: [push]
-
 jobs:
-  build:
+  debug:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
+      - name: List files
+        run: ls -R
