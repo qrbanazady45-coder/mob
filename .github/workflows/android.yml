@@ -20,13 +20,16 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      # ۱. مجوز اجرا را به فایل gradlew در ریشه می‌دهیم
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # ۲. دستور بیلد را اجرا می‌کنیم
-      # نکته مهم: working-directory روی ./app تنظیم شده 
-      # و از ../gradlew استفاده کردیم تا از فایل اصلی در ریشه استفاده شود
       - name: Build with Gradle
         working-directory: ./app
         run: ../gradlew assembleDebug
+
+      # این بخش فایل APK را برای شما ذخیره می‌کند تا بتوانید دانلودش کنید
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
