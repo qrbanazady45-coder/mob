@@ -9,24 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    # این بخش بسیار حیاتی است: تمام دستورات در پوشه app اجرا می‌شوند
-    defaults:
-      run:
-        working-directory: ./app
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # این مرحله برای عیب‌یابی اضافه شده است؛ اگر بیلد شکست خورد، 
-      # در لاگ‌ها ببینید که فایل‌ها دقیقاً در چه مسیری هستند.
-      - name: List files for debugging
-        run: |
-          echo "--- Root Directory Content ---"
-          ls -F
-          echo "--- App Directory Content ---"
-          ls -F app/
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -35,8 +20,13 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
+      # ۱. مجوز اجرا را به فایل gradlew در ریشه می‌دهیم
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # ۲. دستور بیلد را اجرا می‌کنیم
+      # نکته مهم: working-directory روی ./app تنظیم شده 
+      # و از ../gradlew استفاده کردیم تا از فایل اصلی در ریشه استفاده شود
       - name: Build with Gradle
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        working-directory: ./app
+        run: ../gradlew assembleDebug
