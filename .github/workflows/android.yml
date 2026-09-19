@@ -1,8 +1,17 @@
-name: Debug Test
+name: Android CI
+
 on: [push]
+
 jobs:
-  debug:
-    runs-on: ubuntu-22.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Say Hello
-        run: echo "Hello World"
+      - uses: actions/checkout@v4
+      
+      # قدم ۱: چک کردن اینکه آیا فایل gradlew واقعاً در ریشه هست یا نه
+      - name: List files in root
+        run: ls -la
+
+      # قدم ۲: تلاش برای بیلد گرفتن (فقط با یک دستور ساده)
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
