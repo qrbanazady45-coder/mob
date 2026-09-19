@@ -19,10 +19,12 @@ jobs:
           
       - name: Build with Gradle
         run: ./gradlew assembleDebug
-        
-      # این بخش جدید است که فایل را ذخیره می‌کند
+
+      # این مرحله بسیار مهم است: پیدا کردن و ذخیره هر چیزی که پسوند apk دارد
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: my-android-app
+          path: |
+            **/*.apk
+          if-no-files-found: error
