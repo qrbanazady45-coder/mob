@@ -14,11 +14,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -27,9 +26,5 @@ jobs:
         working-directory: ./app
         run: ../gradlew assembleDebug
 
-      # مرحله حیاتی: لیست کردن تمام فایل‌های پوشه اپلیکیشن
       - name: List all files in app directory
-        run: find ./app -name "*.apk"
-
-      # فعلاً آپلود را غیرفعال کردم تا بیلد فقط روی پیدا کردن فایل متمرکز شود
-      # بعد از اینکه مسیر را در مرحله قبل دیدیم، اینجا را اصلاح می‌کنیم
+        run: find . -name "*.apk"
