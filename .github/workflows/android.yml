@@ -27,13 +27,9 @@ jobs:
         working-directory: ./app
         run: ../gradlew assembleDebug
 
-      # این دستور به جای ls، کل پروژه را برای پیدا کردن فایل‌های .apk می‌گردد
-      # و اگر چیزی پیدا نکرد، باز هم ادامه می‌دهد و بیلد را قرمز نمی‌کند
-      - name: Find APK file
-        run: find . -name "*.apk"
+      # مرحله حیاتی: لیست کردن تمام فایل‌های پوشه اپلیکیشن
+      - name: List all files in app directory
+        run: find ./app -name "*.apk"
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/*.apk
+      # فعلاً آپلود را غیرفعال کردم تا بیلد فقط روی پیدا کردن فایل متمرکز شود
+      # بعد از اینکه مسیر را در مرحله قبل دیدیم، اینجا را اصلاح می‌کنیم
