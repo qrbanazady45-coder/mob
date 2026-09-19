@@ -1,9 +1,8 @@
-name: List Files
+name: Debug Test
 on: [push]
 jobs:
   debug:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - name: List files
-        run: ls -R
+      - name: Say Hello
+        run: echo "Hello World"
