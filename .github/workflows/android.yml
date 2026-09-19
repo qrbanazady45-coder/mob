@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      # قدم ۱: چک کردن اینکه آیا فایل gradlew واقعاً در ریشه هست یا نه
-      - name: List files in root
-        run: ls -la
 
-      # قدم ۲: تلاش برای بیلد گرفتن (فقط با یک دستور ساده)
+      # این دستور به فایل gradlew اجازه اجرا شدن می‌دهد
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # حالا که اجازه دارد، آن را اجرا می‌کنیم
       - name: Build with Gradle
         run: ./gradlew assembleDebug
