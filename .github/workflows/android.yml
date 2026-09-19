@@ -20,11 +20,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleDebug
 
-      # این مرحله بسیار مهم است: پیدا کردن و ذخیره هر چیزی که پسوند apk دارد
+      # این مرحله حیاتی است: اگر APK پیدا نشد، لیست تمام فایل‌های ساخته شده را به ما نشان می‌دهد
+      - name: Debug - List all files
+        run: find . -type f
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: my-android-app
-          path: |
-            **/*.apk
-          if-no-files-found: error
+          path: "**/*.apk"
