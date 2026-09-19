@@ -8,10 +8,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # این دستور به فایل gradlew اجازه اجرا شدن می‌دهد
+      # ۱. چک کردن اینکه آیا فایل‌های گریدل سر جایشان هستند یا نه
+      - name: Debug Directory Structure
+        run: |
+          echo "--- Root directory contents ---"
+          ls -la
+          echo "--- Gradle wrapper contents ---"
+          ls -la gradle/wrapper/ || echo "Folder 'gradle/wrapper/' not found!"
+
+      # ۲. چک کردن اینکه جاوا نصب است یا نه
+      - name: Check Java
+        run: java -version
+
+      # ۳. دادن اجازه اجرا
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # حالا که اجازه دارد، آن را اجرا می‌کنیم
+      # ۴. تلاش برای اجرای گریدل (این بار با نسخه چک)
       - name: Build with Gradle
-        run: ./gradlew assembleDebug
+        run: ./gradlew --version && ./gradlew assembleDebug
