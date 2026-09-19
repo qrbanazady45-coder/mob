@@ -13,18 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # این مرحله لیست کامل فایل‌ها را چاپ می‌کند تا ببینیم کجاییم
+      - name: Show me the files
+        run: ls -R
+
       - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
-        working-directory: ./app
-        run: ../gradlew assembleDebug
-
-      - name: List all files in app directory
-        run: find . -name "*.apk"
