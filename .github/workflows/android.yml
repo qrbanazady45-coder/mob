@@ -8,20 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # تنظیم محیط جاوا (برای رفع خطاهای نسخه)
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # اطمینان از اینکه فایل اصلی اجازه اجرا دارد
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # بیلد کردن پروژه
-      - name: Build with Gradle
-           - name: Setup Gradle Wrapper
-       run: ./gradlew wrapper --gradle-version 8.0
+      - name: Setup Gradle Wrapper
+        run: ./gradlew wrapper --gradle-version 8.0
 
+      - name: Build with Gradle
         run: ./gradlew assembleDebug
